@@ -2,10 +2,7 @@
 
 import * as React from 'react'
 import Image from 'next/image'
-import {
-  ShoppingCart,
-  ArrowRight,
-} from 'lucide-react'
+import { ShoppingCart, ArrowRight } from 'lucide-react'
 
 import Navbar from '@/components/ui/navbar'
 import {
@@ -46,18 +43,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, im
           className="object-cover"
         />
       </div>
-      <CardContent className="p-4">
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-between items-center">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex justify-between items-center">
           <span className="font-semibold">${price.toFixed(2)}</span>
           <Button variant="outline" size="sm">
             <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart
           </Button>
-        </CardFooter>
+        </div>
       </CardContent>
     </Card>
   )
