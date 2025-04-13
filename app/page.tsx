@@ -1,12 +1,13 @@
-"use client"
+'use client'
 
 import * as React from 'react'
+import Image from 'next/image'
 import {
   ShoppingCart,
   ArrowRight,
 } from 'lucide-react'
-import Navbar from '@/components/ui/navbar'
 
+import Navbar from '@/components/ui/navbar'
 import {
   Card,
   CardContent,
@@ -36,12 +37,13 @@ interface NewsletterFormProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, image }) => {
   return (
-    <Card className="group overflow-hidden transition-transform hover:-translate-y-1">
-      <div className="relative aspect-square">
-        <img
+    <Card className="group overflow-hidden transition-transform hover:-translate-y-1 shadow-lg">
+      <div className="relative aspect-square w-full">
+        <Image
           src={image}
-          alt={title}
-          className="absolute inset-0 w-full h-full object-cover"
+          alt={`${title} perfume`}
+          fill
+          className="object-cover"
         />
       </div>
       <CardContent className="p-4">
@@ -63,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, price, im
 
 const SeasonCollection: React.FC<SeasonCollectionProps> = ({ title, description }) => {
   return (
-    <Card className="transition-all hover:-translate-y-1">
+    <Card className="transition-all hover:-translate-y-1 p-4">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -78,6 +80,7 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onSubmit?.(email)
+    setEmail('')
   }
 
   return (
@@ -110,61 +113,68 @@ const MeerazHomePage: React.FC = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border">
         <div className="container flex h-16 items-center px-4 md:px-6">
           <Navbar />
         </div>
       </header>
 
+      {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-blue-500 to-blue-600 text-white">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+          <div className="grid gap-6 lg:grid-cols-2 items-center">
             <div className="space-y-4">
-              <div className="inline-block rounded-lg bg-white/10 px-3 py-1 text-sm backdrop-blur-sm">
+              <span className="inline-block rounded-lg bg-white/10 px-3 py-1 text-sm backdrop-blur-sm">
                 New Collection
-              </div>
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              </span>
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
                 Discover Your Signature Scent
               </h1>
-              <p className="max-w-[600px] text-white/90 md:text-xl lg:text-base xl:text-xl">
+              <p className="max-w-[600px] text-white/90 md:text-xl">
                 Explore our curated collection of luxury fragrances. From floral to woody, find the perfect scent that tells your story.
               </p>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button size="lg">Coming Soon <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                <Button variant="outline" className="bg-white/10 hover:bg-white/20 border-white/50">
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <Button size="lg">
+                  Coming Soon <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  className="bg-white/10 hover:bg-white/20 border-white/50 text-white"
+                >
                   Explore Collections
                 </Button>
               </div>
             </div>
-            <div className="mx-auto overflow-hidden rounded-2xl object-cover sm:w-full lg:order-last">
-              <img
+            <div className="mx-auto rounded-2xl overflow-hidden">
+              <Image
                 src="/2.png"
                 alt="Luxury perfume bottles"
-                className="object-cover h-[70vh] w-[40vw]"
+                width={500}
+                height={500}
+                className="object-cover h-auto w-full"
               />
             </div>
           </div>
         </div>
       </section>
 
+      {/* Featured Products */}
       <section className="w-full py-12 md:py-24 bg-background">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-blue-100 px-3 py-1 text-sm">
-                Featured
-              </div>
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                Best Selling Fragrances
-              </h2>
-              <p className="max-w-[900px] text-neutral-700 md:text-xl lg:text-base xl:text-xl">
-                Our most popular scents loved by customers worldwide
-              </p>
+          <div className="text-center space-y-4">
+            <div className="inline-block rounded-lg bg-blue-100 px-3 py-1 text-sm">
+              Featured
             </div>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+              Best Selling Fragrances
+            </h2>
+            <p className="max-w-[900px] mx-auto text-neutral-700 md:text-xl">
+              Our most popular scents loved by customers worldwide
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10">
             {products.map((product, idx) => (
               <ProductCard key={idx} {...product} />
             ))}
@@ -178,24 +188,27 @@ const MeerazHomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Seasonal Collections */}
       <section className="w-full py-12 md:py-24 bg-background">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="mx-auto overflow-hidden rounded-xl object-cover sm:w-full">
-              <img
+          <div className="grid gap-6 lg:grid-cols-2 items-center">
+            <div className="mx-auto overflow-hidden rounded-xl">
+              <Image
                 src="/4.png"
-                alt="Perfume collection"
-                className="object-cover"
+                alt="Seasonal perfume collection"
+                width={500}
+                height={500}
+                className="object-cover w-full h-auto"
               />
             </div>
             <div className="space-y-4">
               <div className="inline-block rounded-lg bg-blue-100 px-3 py-1 text-sm">
                 Collections
               </div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
                 Seasonal Collections
               </h2>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {seasonalCollections.map((season, index) => (
                   <SeasonCollection key={index} {...season} />
                 ))}
@@ -208,12 +221,13 @@ const MeerazHomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Newsletter */}
       <section className="w-full py-12 md:py-24 bg-gradient-to-br from-blue-500 to-blue-600 text-white">
         <div className="container px-4 md:px-6 text-center space-y-4">
-          <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
             Join Us
           </h2>
-          <p className="max-w-[600px] mx-auto text-white/90 md:text-xl lg:text-base xl:text-xl">
+          <p className="max-w-[600px] mx-auto text-white/90 md:text-xl">
             Subscribe to receive updates, access to exclusive deals, and more.
           </p>
           <NewsletterForm onSubmit={(email) => console.log('Subscribed:', email)} />
@@ -223,4 +237,4 @@ const MeerazHomePage: React.FC = () => {
   )
 }
 
-export default MeerazHomePage;
+export default MeerazHomePage
