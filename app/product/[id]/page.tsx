@@ -1,12 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Minus, Plus, ShoppingBag, Star } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+const ProductPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="border-b">
@@ -509,3 +508,5 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
+
+export default ProductPage;
